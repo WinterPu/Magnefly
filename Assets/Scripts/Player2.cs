@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class Player2 : MonoBehaviour
 {
+    public bool Claimed = false;
+
+    public Sprite southSprite;
+    public Sprite northSprite;
+    public Sprite neuturalSprite;
+
     public float speed = 5.0f;
     Rigidbody2D rb;
+    SpriteRenderer sr;
     public LayerMask groundLayers;
 
     public float jumpForce = 7;
-     CircleCollider2D col;
+    CircleCollider2D col;
     public Transform foot;
     public float footCheckRadius = 0.5f;
 
@@ -20,6 +27,43 @@ public class Player2 : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<CircleCollider2D>();
+        sr = GetComponent<SpriteRenderer>();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.RightShift))
+        {
+            // Polarize to South
+            Status = Status.South;
+            sr.sprite = southSprite;
+            if (theOtherPlayer.Claimed == false)
+                Claimed = true;
+            else
+                Claimed = false;
+        }
+        else if (Input.GetKeyUp(KeyCode.RightShift))
+        {
+            Status = Status.Neutral;
+            sr.sprite = neuturalSprite;
+            Claimed = false;
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            // Polarize to North
+            Status = Status.North;
+            sr.sprite = northSprite;
+            if (theOtherPlayer.Claimed == false)
+                Claimed = true;
+            else
+                Claimed = false;
+        }
+        else if (Input.GetKeyUp(KeyCode.Keypad1))
+        {
+            Status = Status.Neutral;
+            sr.sprite = neuturalSprite;
+            Claimed = false;
+        }
     }
 
     void FixedUpdate()
@@ -35,25 +79,6 @@ public class Player2 : MonoBehaviour
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
 
-        if (Input.GetKeyDown(KeyCode.RightShift))
-        {
-            // Polarize to South
-            Status = Status.South;
-        }
-        if (Input.GetKeyUp(KeyCode.RightShift))
-        {
-            Status = Status.Neutral;
-        }
-        if (Input.GetKeyDown(KeyCode.Keypad1))
-        {
-            // Polarize to North
-            Status = Status.North;
-        }
-        if (Input.GetKeyUp(KeyCode.Keypad1))
-        {
-            Status = Status.Neutral;
-        }
-
         // Apply the megnetic forces to the players
         var theOtherStatus = theOtherPlayer.Status;
         if (Status == Status.North && theOtherStatus == Status.North
@@ -62,7 +87,8 @@ public class Player2 : MonoBehaviour
             // Push away
             var dir = transform.position - theOtherPlayer.transform.position;
             var dis = Vector2.Distance(transform.position, theOtherPlayer.transform.position);
-            AddForce(dir.normalized * 50 / dis);
+            if (Claimed == false)
+                AddForce(dir.normalized * 50 / dis);
         }
         else if (Status == Status.North && theOtherStatus == Status.South
             || Status == Status.South && theOtherStatus == Status.North)
@@ -70,7 +96,8 @@ public class Player2 : MonoBehaviour
             // Pull together
             var dir = theOtherPlayer.transform.position - transform.position;
             var dis = Vector2.Distance(transform.position, theOtherPlayer.transform.position);
-            AddForce(dir.normalized * 50 / dis );
+            if (Claimed == false)
+                AddForce(dir.normalized * 50 / dis);
         }
         else
         {
