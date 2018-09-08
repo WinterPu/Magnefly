@@ -63,7 +63,7 @@ public class Player1 : MonoBehaviour
             // Push away
             var dir = transform.position - theOtherPlayer.transform.position;
             var dis = Vector2.Distance(transform.position, theOtherPlayer.transform.position);
-            AddForce(dir.normalized * 10 / dis);
+            AddForce(dir.normalized * 50 / dis);
         }
         else if (Status == Status.North && theOtherStatus == Status.South
             || Status == Status.South && theOtherStatus == Status.North)
@@ -71,7 +71,7 @@ public class Player1 : MonoBehaviour
             // Pull together
             var dir = theOtherPlayer.transform.position - transform.position;
             var dis = Vector2.Distance(transform.position, theOtherPlayer.transform.position);
-            AddForce(dir.normalized * 10 / dis );
+            AddForce(dir.normalized * 50 / dis );
         }
         else
         {
