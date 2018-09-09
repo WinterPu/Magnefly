@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player2 : MonoBehaviour
 {
+    public bool UserInputEnabled = true;
     public bool Claimed = false;
 
     public Sprite southSprite;
@@ -32,51 +33,62 @@ public class Player2 : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.RightShift))
+        if (UserInputEnabled)
         {
-            // Polarize to South
-            Status = Status.South;
-            sr.sprite = southSprite;
-            if (theOtherPlayer.Claimed == false)
-                Claimed = true;
-            else
+            if (Input.GetKeyDown(KeyCode.RightShift))
+            {
+                // Polarize to South
+                Status = Status.South;
+                sr.sprite = southSprite;
+                if (theOtherPlayer.Claimed == false)
+                    Claimed = true;
+                else
+                    Claimed = false;
+            }
+            else if (Input.GetKeyUp(KeyCode.RightShift))
+            {
+                Status = Status.Neutral;
+                sr.sprite = neuturalSprite;
                 Claimed = false;
-        }
-        else if (Input.GetKeyUp(KeyCode.RightShift))
-        {
-            Status = Status.Neutral;
-            sr.sprite = neuturalSprite;
-            Claimed = false;
-        }
-        if (Input.GetKeyDown(KeyCode.Keypad1))
-        {
-            // Polarize to North
-            Status = Status.North;
-            sr.sprite = northSprite;
-            if (theOtherPlayer.Claimed == false)
-                Claimed = true;
-            else
+            }
+            if (Input.GetKeyDown(KeyCode.Keypad1))
+            {
+                // Polarize to North
+                Status = Status.North;
+                sr.sprite = northSprite;
+                if (theOtherPlayer.Claimed == false)
+                    Claimed = true;
+                else
+                    Claimed = false;
+            }
+            else if (Input.GetKeyUp(KeyCode.Keypad1))
+            {
+                Status = Status.Neutral;
+                sr.sprite = neuturalSprite;
                 Claimed = false;
+            }
+
+            
         }
-        else if (Input.GetKeyUp(KeyCode.Keypad1))
+        if (Global.CountOnTheElevator >= 2)
         {
-            Status = Status.Neutral;
-            sr.sprite = neuturalSprite;
-            Claimed = false;
+            // Win the level. 
+            UserInputEnabled = false;
         }
     }
 
     void FixedUpdate()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal2");
-
-        var movement = new Vector2(moveHorizontal, 0);
-
-        rb.AddForce(movement * speed);
-
-        if (Input.GetKeyDown(KeyCode.UpArrow) && IsGrounded)
+        if (UserInputEnabled)
         {
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            float moveHorizontal = Input.GetAxis("Horizontal2");
+            var movement = new Vector2(moveHorizontal, 0);
+            rb.AddForce(movement * speed);
+
+            if (Input.GetKeyDown(KeyCode.UpArrow) && IsGrounded)
+            {
+                rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            }
         }
 
         // Apply the megnetic forces to the players
@@ -102,6 +114,27 @@ public class Player2 : MonoBehaviour
         else
         {
             // Do nothing
+        }
+    }
+
+    bool onElevator = false;
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Elevator"))
+        {
+            if (onElevator) return;
+            Global.CountOnTheElevator += 1;
+            onElevator = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Elevator"))
+        {
+            if (!onElevator) return;
+            Global.CountOnTheElevator -= 1;
+            onElevator = false;
         }
     }
 
