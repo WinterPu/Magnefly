@@ -32,6 +32,9 @@ public class Player1 : MonoBehaviour
     public AudioSource jump_sound;
     public AudioSource magnetic_sound;
 
+    //respawn
+    private bool is_dead = false;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
