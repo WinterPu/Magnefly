@@ -11,6 +11,9 @@ public class Player1 : MonoBehaviour
     public Sprite northSprite;
     public Sprite neuturalSprite;
 
+    public GameObject southChargeFX;
+    public GameObject northChargeFX;
+
     public float speed = 5.0f;
     Rigidbody2D rb;
     SpriteRenderer sr;
@@ -51,6 +54,7 @@ public class Player1 : MonoBehaviour
                     Claimed = false;
 
                 magnetic_sound.Play();
+                southChargeFX.SetActive(true);
             }
             if (Input.GetKeyUp(KeyCode.Q))
             {
@@ -59,6 +63,7 @@ public class Player1 : MonoBehaviour
                 Claimed = false;
 
                 magnetic_sound.Stop();
+                southChargeFX.SetActive(false);
             }
             if (Input.GetKeyDown(KeyCode.E))
             {
@@ -71,6 +76,7 @@ public class Player1 : MonoBehaviour
                     Claimed = false;
 
                 magnetic_sound.Play();
+                northChargeFX.SetActive(true);
             }
             if (Input.GetKeyUp(KeyCode.E))
             {
@@ -79,8 +85,8 @@ public class Player1 : MonoBehaviour
                 Claimed = false;
 
                 magnetic_sound.Stop();
+                northChargeFX.SetActive(false);
             }
-
         }
 
         if (Global.CountOnTheElevator >= 2)
