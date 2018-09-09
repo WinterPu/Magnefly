@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Elevator : MonoBehaviour {
+public class Elevator : MonoBehaviour
+{
 
-    public GameObject lightRed;
-    public GameObject lightGreen;
+    public GameObject upperLight;
+    public GameObject lowerLight;
     Animator animator;
 
     private void Start()
@@ -17,14 +18,25 @@ public class Elevator : MonoBehaviour {
     {
         print(Global.CountOnTheElevator);
 
-        if (Global.CountOnTheElevator >= 2)
+        if (Global.CountOnTheElevator == 1)
+        {
+            lowerLight.SetActive(true);
+            upperLight.SetActive(false);
+        }
+        else if (Global.CountOnTheElevator >= 2)
         {
             // Win the level. 
             // Turn the green light on.
-            lightGreen.SetActive(true);
+            lowerLight.SetActive(true);
+            upperLight.SetActive(true);
 
             // Move up.
             animator.SetTrigger("Win");
+        }
+        else
+        {
+            lowerLight.SetActive(false);
+            upperLight.SetActive(false);
         }
     }
 

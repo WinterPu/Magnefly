@@ -131,27 +131,6 @@ public class Player1 : MonoBehaviour
         }
     }
 
-    bool onElevator = false;
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.collider.CompareTag("Elevator"))
-        {
-            if (onElevator) return;
-            Global.CountOnTheElevator += 1;
-            onElevator = true;
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.collider.CompareTag("Elevator"))
-        {
-            if (!onElevator) return;
-            Global.CountOnTheElevator -= 1;
-            onElevator = false;
-        }
-    }
-
     public bool IsGrounded
     {
         get
