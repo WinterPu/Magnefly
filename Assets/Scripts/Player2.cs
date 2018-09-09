@@ -24,6 +24,10 @@ public class Player2 : MonoBehaviour
     public Player1 theOtherPlayer;
     public Status Status = Status.Neutral;
 
+
+    public AudioSource jump_sound;
+    public AudioSource magnetic_sound;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -44,12 +48,16 @@ public class Player2 : MonoBehaviour
                     Claimed = true;
                 else
                     Claimed = false;
+
+                magnetic_sound.Play();
             }
             else if (Input.GetKeyUp(KeyCode.RightShift))
             {
                 Status = Status.Neutral;
                 sr.sprite = neuturalSprite;
                 Claimed = false;
+
+                magnetic_sound.Stop();
             }
             if (Input.GetKeyDown(KeyCode.Keypad1))
             {
@@ -60,12 +68,17 @@ public class Player2 : MonoBehaviour
                     Claimed = true;
                 else
                     Claimed = false;
+
+                magnetic_sound.Play();
             }
             else if (Input.GetKeyUp(KeyCode.Keypad1))
             {
                 Status = Status.Neutral;
                 sr.sprite = neuturalSprite;
                 Claimed = false;
+
+                magnetic_sound.Stop();
+
             }
 
             
@@ -88,6 +101,8 @@ public class Player2 : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.UpArrow) && IsGrounded)
             {
                 rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+
+                jump_sound.Play();
             }
         }
 
