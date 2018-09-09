@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Elevator : MonoBehaviour
 {
+    public AudioSource elevatorSound;
+    bool won = false;
 
     public GameObject upperLight;
     public GameObject lowerLight;
@@ -31,7 +33,13 @@ public class Elevator : MonoBehaviour
             upperLight.SetActive(true);
 
             // Move up.
-            animator.SetTrigger("Win");
+            if (!won)
+            {
+                animator.SetTrigger("Win");
+                elevatorSound.Play();
+                won = true;
+            }
+
         }
         else
         {

@@ -121,7 +121,7 @@ public class Player2 : MonoBehaviour
             var dir = transform.position - theOtherPlayer.transform.position;
             var dis = Vector2.Distance(transform.position, theOtherPlayer.transform.position);
             if (Claimed == false)
-                AddForce(dir.normalized * 50 / dis);
+                AddForce(dir.normalized * Mathf.Clamp(50 / dis, 0, 15));
         }
         else if (Status == Status.North && theOtherStatus == Status.South
             || Status == Status.South && theOtherStatus == Status.North)
@@ -130,7 +130,7 @@ public class Player2 : MonoBehaviour
             var dir = theOtherPlayer.transform.position - transform.position;
             var dis = Vector2.Distance(transform.position, theOtherPlayer.transform.position);
             if (Claimed == false)
-                AddForce(dir.normalized * 50 / dis);
+                AddForce(dir.normalized * Mathf.Clamp(50 / dis, 0, 15));
         }
         else
         {
