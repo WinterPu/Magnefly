@@ -752,6 +752,7 @@ GameObject:
   - component: {fileID: 1115165968}
   - component: {fileID: 1115165967}
   - component: {fileID: 1115165969}
+  - component: {fileID: 1115165970}
   m_Layer: 13
   m_Name: CurvedOrbit
   m_TagString: Untagged
@@ -885,6 +886,24 @@ PolygonCollider2D:
       - {x: 2.6946378, y: 1.0558647}
       - {x: 2.7546377, y: 1.0458647}
       - {x: 3.4846377, y: 1.0458647}
+--- !u!95 &1115165970
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1115165966}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 06be616ba31e9394a91fe2aba63ca1d7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!4 &1132288689 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4612003397035166, guid: 27f8618745fddfb4eb5966f43866f0d7,
@@ -1158,7 +1177,7 @@ MonoBehaviour:
   speed: 10
   groundLayers:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 8448
   jumpForce: 7
   foot: {fileID: 1973491375}
   footCheckRadius: 0.1
@@ -1503,7 +1522,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a00423009d327ed4393fd637b4c8f1f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoint: 10000
+  hitPoint: 3000
+  supportedItemAnimator: {fileID: 1115165970}
   supportedItemMask:
     serializedVersion: 2
     m_Bits: 8192
@@ -1685,7 +1705,7 @@ MonoBehaviour:
   speed: 10
   groundLayers:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 8448
   jumpForce: 7
   foot: {fileID: 1836005832}
   footCheckRadius: 0.1
@@ -1940,7 +1960,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1617880794}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.6, y: 4.5, z: 0}
+  m_LocalPosition: {x: 7.6, y: 3.72, z: 0}
   m_LocalScale: {x: 0.375, y: 0.325, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2502,7 +2522,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1916596286}
   m_LocalRotation: {x: -0, y: -0, z: -0.60869616, w: 0.7934034}
-  m_LocalPosition: {x: 6.99, y: 4.2, z: 0}
+  m_LocalPosition: {x: 6.99, y: 3.54, z: 0}
   m_LocalScale: {x: 0.7, y: 0.6, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

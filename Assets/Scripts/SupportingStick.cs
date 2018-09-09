@@ -9,6 +9,7 @@ public class SupportingStick : Singleton<SupportingStick>
 {
     [SerializeField] float hitPoint = 1000;
     Animator animator;
+    public Animator supportedItemAnimator;
     Player1 p1;
     Player2 p2;
     public LayerMask supportedItemMask;
@@ -26,15 +27,31 @@ public class SupportingStick : Singleton<SupportingStick>
         // Cast a ray
         var p1p = p1.transform.position;
         var p2p = p2.transform.position;
-        var dir = p2p - p1p;
+        Vector2 dir;
+        Vector2 lp;
+        if (p1.Claimed)
+        {
+            dir = p2p - p1p;
+            lp = p1p;
+        }
+        else
+        {
+            dir = p1p - p2p;
+            lp = p2p;
+        }
+        dir = dir.normalized;
+
         var dis = Vector2.Distance(p1p, p2p);
         if (p1.Status != Status.Neutral && p2.Status != Status.Neutral && p1.Status != p2.Status)
         {
-            var hit = Physics2D.Raycast(p1p, dir, dis, supportedItemMask);
-            if (hit.collider != null)
+            if (dir.y > 0)
             {
-                // The supported item is under the effect
-                Hit(Mathf.Clamp(50 / dis, 0, 15));
+                var hit = Physics2D.Raycast(lp, dir, dis, supportedItemMask);
+                if (hit.collider != null)
+                {
+                    // The supported item is under the effect
+                    Hit(Mathf.Clamp(50 / dis, 0, 15));
+                }
             }
         }
     }
@@ -51,5 +68,6 @@ public class SupportingStick : Singleton<SupportingStick>
     public void Break()
     {
         animator.SetTrigger("Break");
+        supportedItemAnimator.SetTrigger("Fall");
     }
 }
