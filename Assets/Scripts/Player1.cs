@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player1 : MonoBehaviour
+public class Player1 : Singleton<Player1>
 {
     public bool UserInputEnabled = true;
     public bool Claimed = false;
@@ -26,7 +26,6 @@ public class Player1 : MonoBehaviour
 
     public Player2 theOtherPlayer;
     public Status Status = Status.Neutral;
-
 
     //Audio
     public AudioSource jump_sound;

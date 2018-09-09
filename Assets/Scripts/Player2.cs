@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player2 : MonoBehaviour
+public class Player2 : Singleton<Player2>
 {
     public bool UserInputEnabled = true;
     public bool Claimed = false;
